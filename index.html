@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hello World</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: #ffd6e7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* ⭐关键：开启3D空间 */
+        perspective: 800px;
+    }
+
+    h1 {
+        font-family: "Comic Sans MS", "Arial Rounded MT Bold", sans-serif;
+        font-size: 120px;
+        text-align: center;
+
+        /* ⭐图片填充 */
+        background-image: url("./pink-panther.jpg");
+        background-size: cover;
+        background-position: center;
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        /* ⭐描边 */
+        -webkit-text-stroke: 4px white;
+
+        transform-style: preserve-3d;
+    }
+</style>
+</head>
+
+<body>
+
+<h1 id="text">HELLO WORLD!</h1>
+
+<script>
+const text = document.getElementById("text");
+
+let mouseX = 0;
+let mouseY = 0;
+
+let currentX = 0;
+let currentY = 0;
+
+document.addEventListener("mousemove", (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+});
+
+function animate() {
+    // ⭐平滑插值（丝滑的关键）
+    currentX += (mouseY - currentX) * 0.1;
+    currentY += (mouseX - currentY) * 0.1;
+
+    text.style.transform = `
+        rotateX(${currentX}deg)
+        rotateY(${currentY}deg)
+    `;
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
